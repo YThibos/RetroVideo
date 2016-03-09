@@ -42,10 +42,12 @@ public class FilmDAO extends AbstractDAO {
 				) {
 			
 			// TODO STEEK ELKE ID IN EEN QUERY, QUERY IN BATCH, EXEC BATCH
+			return null;
 			
 		}
 		catch (SQLException ex ) {
-						
+			logger.log(Level.SEVERE, "Exception while getting data from Films in findByMultipleIds()", ex);
+			throw new DAOException(ex);
 		}
 	}
 	

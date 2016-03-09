@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/retrovideo">
+<Context path="/RetroVideo">
 	<Resource 
 		name="jdbc/retrovideo"
 		type="javax.sql.DataSource"
@@ -8,5 +8,5 @@
 		username="cursist"
 		password="cursist"
 		closeMethod="close"
-		/>
+		></Resource>
 </Context>

@@ -3,6 +3,6 @@
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <property name="java-output-path" value="/RetroVideo_Yannick/build/classes"/>
-        <property name="context-root" value="retrovideo"/>
+        <property name="context-root" value="/RetroVideo"/>
     </wb-module>
 </project-modules>

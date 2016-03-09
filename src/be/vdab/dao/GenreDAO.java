@@ -16,9 +16,9 @@ public class GenreDAO extends AbstractDAO {
 	/**
 	 * COLUMN NAMES OF THE GENRE TABLE
 	 */
-	private static final String FIELD_ID = "id";
-	private static final String FIELD_NAME = "naam";
-	public static final String ALL_GENRE_FIELDS = "id, naam";
+	private static final String FIELD_ID = "genres.id";
+	private static final String FIELD_NAME = "genres.naam";
+	public static final String ALL_GENRE_FIELDS = "genres.id, genres.naam";
 
 	/**
 	 * SQL QUERIES

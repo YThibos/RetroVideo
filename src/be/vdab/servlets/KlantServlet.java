@@ -14,14 +14,21 @@ import javax.servlet.http.HttpServletResponse;
 public class KlantServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private static final String VIEW = "/WEB-INF/JSP/klant.jsp";
        
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		if (request.getParameter("familienaam") != null) {
+			
+		}
+		
+		request.getRequestDispatcher(VIEW).forward(request, response);
+		
 	}
 
 }

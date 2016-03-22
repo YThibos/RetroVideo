@@ -3,6 +3,8 @@ package be.vdab.entities;
 import java.math.BigDecimal;
 
 public class Film {
+	
+	// TODO EXCEPTION CHECKING
 
 	private long id;
 	private String titel;

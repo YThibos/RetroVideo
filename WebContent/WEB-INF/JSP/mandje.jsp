@@ -23,8 +23,12 @@
 				<th>Prijs</th>
 				<th><input type="submit" value="Verwijderen"/>
 			</tr>
-			<c:forEach var="id" items="${sessionScope.mandje}">
-				
+			<c:forEach var="film" items="${filmsInMandje}">
+			<tr>
+				<td>${film.titel}</td>
+				<td>&euro;${film.prijs}</td>
+				<td><input class='verwijderCheck' type='checkbox' name='remove' value='${film.id}'></td>
+			</tr>
 			</c:forEach>
 		</thead>
 	</table>

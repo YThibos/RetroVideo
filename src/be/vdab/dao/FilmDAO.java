@@ -23,26 +23,41 @@ public class FilmDAO extends AbstractDAO {
 	 * SQL QUERIES
 	 */
 	private static final String SQL_SELECT_GENRE = "SELECT " + ALL_FILM_FIELDS
-			+ ", "+ GenreDAO.ALL_GENRE_FIELDS + " "
-			+ "FROM films INNER JOIN genres ON films.genreid=genres.id "
-			+ "WHERE genres.naam=? "
-			+ "ORDER BY films.titel ASC";
-	private static final String SQL_SELECT_TITEL = "SELECT films.id, films.genreid, films.titel, films.voorraad, "
-			+ "films.gereserveerd, films.prijs "
-			+ "FROM films "
-			+ "WHERE films.titel=?";
-	private static final String SQL_SELECT_IDS = "SELECT " + ALL_FILM_FIELDS
-			+ "FROM films WHERE id=?";
+			+ ", "+ GenreDAO.ALL_GENRE_FIELDS
+			+ " FROM films INNER JOIN genres ON films.genreid=genres.id"
+			+ " WHERE genres.naam=?"
+			+ " ORDER BY films.titel ASC";
+	private static final String SQL_SELECT_TITEL = "SELECT films.id, films.genreid, films.titel, films.voorraad,"
+			+ " films.gereserveerd, films.prijs"
+			+ " FROM films"
+			+ " WHERE films.titel=?";
+	private static final String SQL_SELECT_ID = "SELECT " + ALL_FILM_FIELDS
+			+ " FROM films WHERE films.id=?";
 	
 	private static final Logger logger = Logger.getLogger(GenreDAO.class.getName());
 	
-	public Film findMultipleIds (List<Long> ids) {
+	public List<Film> findMultipleIds (List<Long> ids) {
 		
 		try (Connection connection = dataSource.getConnection();
-				) {
+				PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ID)) {
+
+			List<Film> foundFilms = new ArrayList<>();
 			
-			// TODO STEEK ELKE ID IN EEN QUERY, QUERY IN BATCH, EXEC BATCH
-			return null;
+			connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+			connection.setAutoCommit(false);
+			
+			for (Long id : ids) {
+				statement.setLong(1, id);
+				try (ResultSet results = statement.executeQuery()) {
+					while (results.next()) {
+						foundFilms.add(mapResultRowToFilm(results));
+					}
+				}
+			}
+			
+			connection.commit();
+			
+			return foundFilms;
 			
 		}
 		catch (SQLException ex ) {
@@ -76,7 +91,7 @@ public class FilmDAO extends AbstractDAO {
 		
 	}
 	
-	public List<Film> findByGenreNaam (String naam) {
+	public List<Film> findByGenre (String naam) {
 		
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(SQL_SELECT_GENRE)) {

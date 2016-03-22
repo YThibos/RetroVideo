@@ -30,7 +30,8 @@
 	</dl>
 	<c:if test="${beschikbaar > 0}">
 		<form method="post" action="<c:url value="/mandje.htm" />" id="inmandjeform">
-			<input type="submit" value="In mandje" name="${film.id}" id="inmandjeknop" />
+			<input name="id" value="${film.id}" hidden="true"/>
+			<input type="submit" value="In mandje" name="inmandje" id="inmandjeknop"/>
 		</form>
 	</c:if>
 	</c:when>

@@ -20,6 +20,11 @@ dd {
 	font-weight: bold;
 }
 
+th {
+	background-color: grey;
+	border: 1px silver solid;
+}
+
 label span, .fout {
 	background-color: red;
 	border-bottom-right-radius: 0.5em;

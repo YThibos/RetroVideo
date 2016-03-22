@@ -43,7 +43,7 @@ public class ReservatiesServlet extends HttpServlet {
 		String selectedGenre = request.getParameter("genre");
 		if (selectedGenre != null && !"".equals(selectedGenre)) {
 			
-			List<Film> filmsByGenre = filmDAO.findByGenreNaam(selectedGenre);
+			List<Film> filmsByGenre = filmDAO.findByGenre(selectedGenre);
 			request.setAttribute("filmsByGenre", filmsByGenre);
 		}
 		

@@ -19,22 +19,50 @@ public class KlantDAO extends AbstractDAO {
 			+ " FROM klanten"
 			+ " WHERE klanten.familienaam LIKE ?";
 	
+	private static final String SQL_SELECT_ID = "SELECT " + ALL_KLANT_FIELDS
+			+ " FROM klanten"
+			+ " WHERE klanten.id = ?";
+	
 	
 	public KlantDAO () { }
+	
+	public Klant findByID (long id) {
+		
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement sqlStatement = connection.prepareStatement(SQL_SELECT_ID)) {
+			
+			connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+			
+			sqlStatement.setLong(1, id);
+			
+			Klant foundKlant = null;
+			
+			try (ResultSet results = sqlStatement.executeQuery()) {
+				if (results.next())	foundKlant = mapResultRowToKlant(results);
+			}
+			
+			return foundKlant;
+			
+		}
+		catch (SQLException ex ) {
+			throw new DAOException(ex);
+		}
+		
+	}
 	
 	public List<Klant> findByFamilienaam (String zoekstring) {
 		
 		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(SQL_SELECT_LIKE_FAMILIENAAM)) {
+				PreparedStatement sqlStatement = connection.prepareStatement(SQL_SELECT_LIKE_FAMILIENAAM)) {
 			
 			connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 			
 			zoekstring = "%" + zoekstring + "%";
-			statement.setString(1, zoekstring);
+			sqlStatement.setString(1, zoekstring);
 			
 			List<Klant> foundKlanten = new ArrayList<>();
 			
-			try (ResultSet results = statement.executeQuery()) {
+			try (ResultSet results = sqlStatement.executeQuery()) {
 				while (results.next()) {
 					foundKlanten.add(mapResultRowToKlant(results));
 				}

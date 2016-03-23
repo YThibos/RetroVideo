@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import be.vdab.dao.FilmDAO;
-import be.vdab.dao.GenreDAO;
 
 /**
  * Servlet implementation class MandjeServlet

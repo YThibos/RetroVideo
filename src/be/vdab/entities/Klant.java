@@ -5,7 +5,7 @@ public class Klant {
 	private long id;
 	private String familienaam;
 	private String voornaam;
-	private String straatnummer;
+	private String straatNummer;
 	private String postcode;
 	private String gemeente;
 	
@@ -14,16 +14,16 @@ public class Klant {
 		this.id = -1;
 		this.familienaam = "niet ingevuld";
 		this.voornaam = "niet ingevuld";
-		this.straatnummer = "niet ingevuld";
+		this.straatNummer = "niet ingevuld";
 		this.postcode = "niet ingevuld";
 		this.gemeente = "niet ingevuld";
 	}
 	
-	public Klant(long id, String familienaam, String voornaam, String straatnummer, String postcode, String gemeente) {
+	public Klant(long id, String familienaam, String voornaam, String straatNummer, String postcode, String gemeente) {
 		this.id = id;
 		this.familienaam = familienaam;
 		this.voornaam = voornaam;
-		this.straatnummer = straatnummer;
+		this.straatNummer = straatNummer;
 		this.postcode = postcode;
 		this.gemeente = gemeente;
 	}
@@ -47,11 +47,11 @@ public class Klant {
 	public void setVoornaam(String voornaam) {
 		this.voornaam = voornaam;
 	}
-	public String getStraatnummer() {
-		return straatnummer;
+	public String getStraatNummer() {
+		return straatNummer;
 	}
-	public void setStraatnummer(String straatnummer) {
-		this.straatnummer = straatnummer;
+	public void setStraatNummer(String straatNummer) {
+		this.straatNummer = straatNummer;
 	}
 	public String getPostcode() {
 		return postcode;
@@ -69,8 +69,8 @@ public class Klant {
 	// DEFAULT OVERRIDE METHODS
 	@Override
 	public String toString() {
-		return "Klant [id=" + id + ", familienaam=" + familienaam + ", voornaam=" + voornaam + ", straatnummer="
-				+ straatnummer + ", postcode=" + postcode + ", gemeente=" + gemeente + "]";
+		return "Klant [id=" + id + ", familienaam=" + familienaam + ", voornaam=" + voornaam + ", straatNummer="
+				+ straatNummer + ", postcode=" + postcode + ", gemeente=" + gemeente + "]";
 	}
 
 	@Override

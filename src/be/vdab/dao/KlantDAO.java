@@ -1,7 +1,11 @@
 package be.vdab.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import be.vdab.entities.Klant;
 import be.vdab.entities.KlantBuilder;
@@ -11,6 +15,39 @@ public class KlantDAO extends AbstractDAO {
 	private static final String ALL_KLANT_FIELDS = "klanten.id, klanten.familienaam, klanten.voornaam,"
 			+ " klanten.straatNummer, klanten.postcode, klanten.gemeente";
 	
+	private static final String SQL_SELECT_LIKE_FAMILIENAAM = "SELECT " + ALL_KLANT_FIELDS
+			+ " FROM klanten"
+			+ " WHERE klanten.familienaam LIKE ?";
+	
+	
+	public KlantDAO () { }
+	
+	public List<Klant> findByFamilienaam (String zoekstring) {
+		
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(SQL_SELECT_LIKE_FAMILIENAAM)) {
+			
+			connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+			
+			zoekstring = "%" + zoekstring + "%";
+			statement.setString(1, zoekstring);
+			
+			List<Klant> foundKlanten = new ArrayList<>();
+			
+			try (ResultSet results = statement.executeQuery()) {
+				while (results.next()) {
+					foundKlanten.add(mapResultRowToKlant(results));
+				}
+			}
+			
+			return foundKlanten;
+			
+		}
+		catch (SQLException ex ) {
+			throw new DAOException(ex);			
+		}
+		
+	}
 	
 	public Klant mapResultRowToKlant (ResultSet results) throws SQLException {
 		KlantBuilder klantBuilder = new KlantBuilder();

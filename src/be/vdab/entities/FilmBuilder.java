@@ -3,7 +3,7 @@ package be.vdab.entities;
 import java.math.BigDecimal;
 
 /**
- * Builder voor de Film class. Alle velden zijn verplicht in te vullen.
+ * Builder voor de Film class. Alle velden zijn verplicht in te vullen via de setter methods.
  * Zoniet zal createFilm een exception throwen.
  * 
  * @author yannick.thibos
@@ -62,7 +62,7 @@ public class FilmBuilder {
 	 * Alle velden moeten eerst gezet worden voordat createFilm succesvol een Film returnt.
 	 * 
 	 * @return Een Film object met attributen gezet door de setters van de FilmBuilder.
-	 * @throws FilmException Wanneer minstens één setter werd overgeslagen.
+	 * @throws FilmException Thrown wanneer minstens één setter werd overgeslagen.
 	 */
 	public Film createFilm() throws FilmException {
 		if (id != -1 && titel != null && genre != null && voorraad != -1 && gereserveerd != -1 && prijs != null) {

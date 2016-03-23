@@ -10,7 +10,9 @@ public class KlantBuilder {
 	private String gemeente;
 	
 	public KlantBuilder() {
-	
+		this.id = -1;
+		this.familienaam = this.voornaam = this.straatnummer 
+				= this.postcode = this.gemeente = null;
 	}
 	
 	public KlantBuilder setID(long id) {
@@ -43,8 +45,13 @@ public class KlantBuilder {
 		return this;
 	}
 	
-	public Klant createKlant() {
-		return new Klant(id, familienaam, voornaam, straatnummer, postcode, gemeente);
+	public Klant createKlant() throws KlantException {
+		if (id != -1 && familienaam != null && voornaam != null && straatnummer != null && postcode != null && gemeente != null) {
+			return new Klant(id, familienaam, voornaam, straatnummer, postcode, gemeente);	
+		}
+		else {
+			throw new KlantException("Een van de velden werd niet ingevuld in de KlantBuilder");
+		}
 	}
 
 }

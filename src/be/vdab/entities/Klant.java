@@ -1,5 +1,7 @@
 package be.vdab.entities;
 
+import java.util.Objects;
+
 public class Klant {
 	
 	private long id;
@@ -10,8 +12,13 @@ public class Klant {
 	private String gemeente;
 	
 	// CONSTRUCTORS
+	/**
+	 * Default constructor met waarden:
+	 * <br> id = 0
+	 * <br> "niet ingevuld" voor alle andere velden (Strings)
+	 */
 	public Klant() {
-		this.id = -1;
+		this.id = 0;
 		this.familienaam = "niet ingevuld";
 		this.voornaam = "niet ingevuld";
 		this.straatNummer = "niet ingevuld";
@@ -19,51 +26,66 @@ public class Klant {
 		this.gemeente = "niet ingevuld";
 	}
 	
-	public Klant(long id, String familienaam, String voornaam, String straatNummer, String postcode, String gemeente) {
-		this.id = id;
-		this.familienaam = familienaam;
-		this.voornaam = voornaam;
-		this.straatNummer = straatNummer;
-		this.postcode = postcode;
-		this.gemeente = gemeente;
+	public Klant(long id, String familienaam, String voornaam, String straatNummer, String postcode, String gemeente) throws KlantException {
+		setId(id);
+		setFamilienaam(familienaam);
+		setVoornaam(voornaam);
+		setStraatNummer(straatNummer);
+		setPostcode(postcode);
+		setGemeente(gemeente);
 	}
 	
 	// GETTERS & SETTERS
 	public long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(long id) throws KlantException {
+		if (id < 0) {
+			throw new KlantException("Klant ID mag niet negatief zijn");
+		}
 		this.id = id;
 	}
 	public String getFamilienaam() {
 		return familienaam;
 	}
-	public void setFamilienaam(String familienaam) {
+	public void setFamilienaam(String familienaam) throws KlantException {
+		checkString(familienaam, "familienaam");
 		this.familienaam = familienaam;
 	}
 	public String getVoornaam() {
 		return voornaam;
 	}
-	public void setVoornaam(String voornaam) {
+	public void setVoornaam(String voornaam) throws KlantException {
+		checkString(voornaam, "voornaam");
 		this.voornaam = voornaam;
 	}
 	public String getStraatNummer() {
 		return straatNummer;
 	}
-	public void setStraatNummer(String straatNummer) {
+	public void setStraatNummer(String straatNummer) throws KlantException {
+		checkString(straatNummer, "straat en huisnummer");
 		this.straatNummer = straatNummer;
 	}
 	public String getPostcode() {
 		return postcode;
 	}
-	public void setPostcode(String postcode) {
+	public void setPostcode(String postcode) throws KlantException {
+		checkString(postcode, "postcode");
 		this.postcode = postcode;
 	}
 	public String getGemeente() {
 		return gemeente;
 	}
-	public void setGemeente(String gemeente) {
+	public void setGemeente(String gemeente) throws KlantException {
+		checkString(gemeente, "gemeente");
 		this.gemeente = gemeente;
+	}
+	
+	private void checkString(String string, String varNaam) throws KlantException {
+		Objects.requireNonNull(string, "Een " + varNaam + " mag niet null zijn");
+		if (string.equals("")) {
+			throw new KlantException("Een " + varNaam + " mag niet leeg zijn");
+		}
 	}
 
 	// DEFAULT OVERRIDE METHODS

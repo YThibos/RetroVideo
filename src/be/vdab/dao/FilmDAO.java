@@ -15,6 +15,12 @@ import be.vdab.entities.FilmBuilder;
 import be.vdab.entities.FilmException;
 import be.vdab.entities.Genre;
 
+/**
+ * Data Access Object om film data uit de retrovideo database te halen.
+ *
+ * @author Yannick.Thibos
+ *
+ */
 public class FilmDAO extends AbstractDAO {
 
 	public static final String ALL_FILM_FIELDS = "films.id, films.genreid, films.titel, "
@@ -56,6 +62,7 @@ public class FilmDAO extends AbstractDAO {
 			
 		}
 		catch (SQLException ex ) {
+			logger.log(Level.SEVERE, "Exception bij het ophalen van data uit table films", ex);
 			throw new DAOException(ex);
 		}
 		
@@ -68,6 +75,7 @@ public class FilmDAO extends AbstractDAO {
 
 			List<Film> foundFilms = new ArrayList<>();
 			
+			// SELECT QUERY ONLY EXECUTED ONCE: READ_COMMITTED SAFE ENOUGH
 			connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 			connection.setAutoCommit(false);
 			
@@ -86,7 +94,7 @@ public class FilmDAO extends AbstractDAO {
 			
 		}
 		catch (SQLException ex ) {
-			logger.log(Level.SEVERE, "Exception while getting data from Films in findByMultipleIds()", ex);
+			logger.log(Level.SEVERE, "Exception bij het ophalen van data uit table films", ex);
 			throw new DAOException(ex);
 		}
 	}
@@ -110,7 +118,7 @@ public class FilmDAO extends AbstractDAO {
 			return foundFilm;
 		}
 		catch (SQLException ex ) {
-			logger.log(Level.SEVERE, "Exception encountered while accessing Films in findByTitel()", ex);
+			logger.log(Level.SEVERE, "Exception bij het ophalen van data uit table films", ex);
 			throw new DAOException(ex);
 		}
 		
@@ -140,13 +148,14 @@ public class FilmDAO extends AbstractDAO {
 			
 		}
 		catch (SQLException ex ) {
-			logger.log(Level.SEVERE, "Exception while accesssing Films and Genres in findByGenre()", ex);
+			logger.log(Level.SEVERE, "Exception bij het ophalen van data uit table films", ex);
 			throw new DAOException(ex);
 		}
 		
 	}
 	
 	private Film mapResultRowToFilm(ResultSet results) throws SQLException {
+		
 		FilmBuilder newFilm = new FilmBuilder();
 		 try {
 			return newFilm
@@ -156,9 +165,11 @@ public class FilmDAO extends AbstractDAO {
 			.setVoorraad(results.getInt("films.voorraad"))
 			.setPrijs(new BigDecimal(results.getDouble("films.prijs")))
 			.createFilm();
-		} catch (FilmException e) {
+		} catch (FilmException ex) {
+			logger.log(Level.SEVERE, "Error bij mappen/aanmaken van Film uit ResultSet", ex);
 			return null;
 		}
+		 
 	}
 
 	private Film mapResultRowToFilmWithGenre(ResultSet results) throws SQLException {

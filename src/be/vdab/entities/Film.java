@@ -3,6 +3,12 @@ package be.vdab.entities;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * Class die een Film en zijn eigenschappen beschrijft.
+ * 
+ * @author Yannick.Thibos
+ *
+ */
 public class Film {
 	
 	private long id;
@@ -13,6 +19,13 @@ public class Film {
 	private BigDecimal prijs;
 	
 	// CONSTRUCTORS
+	/**
+	 * Default constructor met waarden:
+	 * <br> id = 0 <br> titel = "onbepaald"
+	 * <br> genre See {@link Genre() Genre default constructor}
+	 * <br> voorraad = 0 <br> gereserveerd = 0
+	 * <br> prijs = BigDecimal.ZERO
+	 */
 	public Film() {
 		this.id = 0;
 		this.titel = "onbepaald";
@@ -102,11 +115,15 @@ public class Film {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((genre == null) ? 0 : genre.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((titel == null) ? 0 : titel.hashCode());
 		return result;
 	}
 
+	/**
+	 * Een film is 'equal' aan een andere film als hij dezelfde id, titel en genre heeft.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -116,6 +133,11 @@ public class Film {
 		if (getClass() != obj.getClass())
 			return false;
 		Film other = (Film) obj;
+		if (genre == null) {
+			if (other.genre != null)
+				return false;
+		} else if (!genre.equals(other.genre))
+			return false;
 		if (id != other.id)
 			return false;
 		if (titel == null) {
@@ -125,6 +147,7 @@ public class Film {
 			return false;
 		return true;
 	}
+
 	
 	
 	

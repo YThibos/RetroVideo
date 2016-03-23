@@ -1,11 +1,10 @@
 package be.vdab.entities;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Film {
 	
-	// TODO EXCEPTION CHECKING
-
 	private long id;
 	private String titel;
 	private Genre genre;
@@ -15,61 +14,82 @@ public class Film {
 	
 	// CONSTRUCTORS
 	public Film() {
-		this.id = -1;
+		this.id = 0;
 		this.titel = "onbepaald";
 		this.genre = new Genre();
 		this.voorraad = 0;
 		this.gereserveerd = 0;
-		this.prijs = new BigDecimal(0);
+		this.prijs = BigDecimal.ZERO;
 	}
 
-	public Film(long id, String titel, Genre genre, int voorraad, int gereserveerd, BigDecimal prijs) {
-		this.id = id;
-		this.titel = titel;
-		this.genre = genre;
-		this.voorraad = voorraad;
-		this.gereserveerd = gereserveerd;
-		this.prijs = prijs;
+	public Film(long id, String titel, Genre genre, int voorraad, int gereserveerd, BigDecimal prijs) throws FilmException {
+		setId(id);
+		setTitel(titel);
+		setGenre(genre);
+		setVoorraad(voorraad);
+		setGereserveerd(gereserveerd);
+		setPrijs(prijs);
 	}
 
 	// GETTERS & SETTERS
 	public long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(long id) throws FilmException {
+		if (id < 0) {
+			throw new FilmException("Een film ID mag niet negatief zijn");
+		}
 		this.id = id;
 	}
 	public String getTitel() {
 		return titel;
 	}
-	public void setTitel(String titel) {
+	public void setTitel(String titel) throws FilmException {
+		Objects.requireNonNull(titel, "Een film titel mag niet null zijn");
+		if (titel.equals("")) {
+			throw new FilmException("Een film mag geen lege titel hebben");
+		}
 		this.titel = titel;
 	}
 	public Genre getGenre() {
 		return genre;
 	}
 	public void setGenre(Genre genre) {
+		Objects.requireNonNull(genre, "Een film genre mag niet null zijn");
 		this.genre = genre;
 	}
 	public int getVoorraad() {
 		return voorraad;
 	}
-	public void setVoorraad(int voorraad) {
+	public void setVoorraad(int voorraad) throws FilmException {
+		if (isNegative(voorraad)) {
+			throw new FilmException("Een film voorraad kan niet negatief zijn");
+		}
 		this.voorraad = voorraad;
 	}
 	public int getGereserveerd() {
 		return gereserveerd;
 	}
-	public void setGereserveerd(int gereserveerd) {
+	public void setGereserveerd(int gereserveerd) throws FilmException {
+		if (isNegative(gereserveerd)) {
+			throw new FilmException("Aantal reservaties v/e film kan niet negatief zijn");
+		}
 		this.gereserveerd = gereserveerd;
 	}
 	public BigDecimal getPrijs() {
 		return prijs;
 	}
-	public void setPrijs(BigDecimal prijs) {
+	public void setPrijs(BigDecimal prijs) throws FilmException {
+		Objects.requireNonNull(prijs, "De prijs van een film mag niet null zijn");
+		if (prijs.compareTo(BigDecimal.ZERO) < 0) {
+			throw new FilmException("De prijs van een film mag niet negatief zijn");
+		}
 		this.prijs = prijs;
 	}
 
+	private boolean isNegative(long number) {
+		return number < 0;
+	}
 	
 	// DEFAULT OVERRIDE METHODS
 	@Override

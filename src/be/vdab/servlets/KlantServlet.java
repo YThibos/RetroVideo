@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import be.vdab.dao.FilmDAO;
 import be.vdab.dao.KlantDAO;
 
 /**

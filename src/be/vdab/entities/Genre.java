@@ -7,7 +7,7 @@ public class Genre {
 	
 	// CONSTRUCTORS
 	public Genre() {
-		this.id = -1;
+		this.id = 0;
 		this.naam = "onbepaald";
 	}
 	

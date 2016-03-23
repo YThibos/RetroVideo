@@ -26,7 +26,6 @@ public class ReservatiesServlet extends HttpServlet {
 	
 	private static final String VIEW = "/WEB-INF/JSP/reservaties.jsp";
 	
-	// TODO Interface type
 	private static final GenreDAO genreDAO = new GenreDAO();
 	private static final FilmDAO filmDAO = new FilmDAO();
 

@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import be.vdab.entities.Film;
 import be.vdab.entities.FilmBuilder;
+import be.vdab.entities.FilmException;
 import be.vdab.entities.Genre;
 
 public class FilmDAO extends AbstractDAO {
@@ -147,13 +148,17 @@ public class FilmDAO extends AbstractDAO {
 	
 	private Film mapResultRowToFilm(ResultSet results) throws SQLException {
 		FilmBuilder newFilm = new FilmBuilder();
-		 return newFilm
-		.setId(results.getLong("films.id"))
-		.setTitel(results.getString("films.titel"))
-		.setGereserveerd(results.getInt("films.gereserveerd"))
-		.setVoorraad(results.getInt("films.voorraad"))
-		.setPrijs(new BigDecimal(results.getDouble("films.prijs")))
-		.createFilm();
+		 try {
+			return newFilm
+			.setId(results.getLong("films.id"))
+			.setTitel(results.getString("films.titel"))
+			.setGereserveerd(results.getInt("films.gereserveerd"))
+			.setVoorraad(results.getInt("films.voorraad"))
+			.setPrijs(new BigDecimal(results.getDouble("films.prijs")))
+			.createFilm();
+		} catch (FilmException e) {
+			return null;
+		}
 	}
 
 	private Film mapResultRowToFilmWithGenre(ResultSet results) throws SQLException {

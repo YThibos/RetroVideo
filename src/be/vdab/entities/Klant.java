@@ -39,7 +39,7 @@ public class Klant {
 	public long getId() {
 		return id;
 	}
-	public void setId(long id) throws KlantException {
+	public final void setId(long id) throws KlantException {
 		if (id < 0) {
 			throw new KlantException("Klant ID mag niet negatief zijn");
 		}
@@ -48,40 +48,40 @@ public class Klant {
 	public String getFamilienaam() {
 		return familienaam;
 	}
-	public void setFamilienaam(String familienaam) throws KlantException {
+	public final void setFamilienaam(String familienaam) throws KlantException {
 		checkString(familienaam, "familienaam");
 		this.familienaam = familienaam;
 	}
 	public String getVoornaam() {
 		return voornaam;
 	}
-	public void setVoornaam(String voornaam) throws KlantException {
+	public final void setVoornaam(String voornaam) throws KlantException {
 		checkString(voornaam, "voornaam");
 		this.voornaam = voornaam;
 	}
 	public String getStraatNummer() {
 		return straatNummer;
 	}
-	public void setStraatNummer(String straatNummer) throws KlantException {
+	public final void setStraatNummer(String straatNummer) throws KlantException {
 		checkString(straatNummer, "straat en huisnummer");
 		this.straatNummer = straatNummer;
 	}
 	public String getPostcode() {
 		return postcode;
 	}
-	public void setPostcode(String postcode) throws KlantException {
+	public final void setPostcode(String postcode) throws KlantException {
 		checkString(postcode, "postcode");
 		this.postcode = postcode;
 	}
 	public String getGemeente() {
 		return gemeente;
 	}
-	public void setGemeente(String gemeente) throws KlantException {
+	public final void setGemeente(String gemeente) throws KlantException {
 		checkString(gemeente, "gemeente");
 		this.gemeente = gemeente;
 	}
 	
-	private void checkString(String string, String varNaam) throws KlantException {
+	private final void checkString(String string, String varNaam) throws KlantException {
 		Objects.requireNonNull(string, "Een " + varNaam + " mag niet null zijn");
 		if (string.equals("")) {
 			throw new KlantException("Een " + varNaam + " mag niet leeg zijn");

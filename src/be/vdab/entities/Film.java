@@ -57,7 +57,7 @@ public class Film {
 	public String getTitel() {
 		return titel;
 	}
-	public void setTitel(String titel) throws FilmException {
+	public final void setTitel(String titel) throws FilmException {
 		Objects.requireNonNull(titel, "Een film titel mag niet null zijn");
 		if (titel.equals("")) {
 			throw new FilmException("Een film mag geen lege titel hebben");
@@ -67,14 +67,14 @@ public class Film {
 	public Genre getGenre() {
 		return genre;
 	}
-	public void setGenre(Genre genre) {
+	public final void setGenre(Genre genre) {
 		Objects.requireNonNull(genre, "Een film genre mag niet null zijn");
 		this.genre = genre;
 	}
 	public int getVoorraad() {
 		return voorraad;
 	}
-	public void setVoorraad(int voorraad) throws FilmException {
+	public final void setVoorraad(int voorraad) throws FilmException {
 		if (isNegative(voorraad)) {
 			throw new FilmException("Een film voorraad kan niet negatief zijn");
 		}
@@ -83,7 +83,7 @@ public class Film {
 	public int getGereserveerd() {
 		return gereserveerd;
 	}
-	public void setGereserveerd(int gereserveerd) throws FilmException {
+	public final void setGereserveerd(int gereserveerd) throws FilmException {
 		if (isNegative(gereserveerd)) {
 			throw new FilmException("Aantal reservaties v/e film kan niet negatief zijn");
 		}
@@ -92,7 +92,7 @@ public class Film {
 	public BigDecimal getPrijs() {
 		return prijs;
 	}
-	public void setPrijs(BigDecimal prijs) throws FilmException {
+	public final void setPrijs(BigDecimal prijs) throws FilmException {
 		Objects.requireNonNull(prijs, "De prijs van een film mag niet null zijn");
 		if (prijs.compareTo(BigDecimal.ZERO) < 0) {
 			throw new FilmException("De prijs van een film mag niet negatief zijn");
@@ -100,7 +100,7 @@ public class Film {
 		this.prijs = prijs;
 	}
 
-	private boolean isNegative(long number) {
+	private final boolean isNegative(long number) {
 		return number < 0;
 	}
 	

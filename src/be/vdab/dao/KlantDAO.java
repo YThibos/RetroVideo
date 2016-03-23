@@ -13,6 +13,11 @@ import be.vdab.entities.Klant;
 import be.vdab.entities.KlantBuilder;
 import be.vdab.entities.KlantException;
 
+/**
+ * Data Access Object om klant data uit de retrovideo database te halen.
+ * @author Yannick.Thibos
+ *
+ */
 public class KlantDAO extends AbstractDAO {
 
 	private static final String ALL_KLANT_FIELDS = "klanten.id, klanten.familienaam, klanten.voornaam,"
@@ -50,6 +55,7 @@ public class KlantDAO extends AbstractDAO {
 			
 		}
 		catch (SQLException ex ) {
+			logger.log(Level.SEVERE, "Exception bij het ophalen van data uit table klanten", ex);
 			throw new DAOException(ex);
 		}
 		
@@ -77,6 +83,7 @@ public class KlantDAO extends AbstractDAO {
 			
 		}
 		catch (SQLException ex ) {
+			logger.log(Level.SEVERE, "Exception bij het ophalen van data uit table klanten", ex);
 			throw new DAOException(ex);			
 		}
 		

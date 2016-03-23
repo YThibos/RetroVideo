@@ -1,5 +1,11 @@
 package be.vdab.entities;
 
+/**
+ * Builder voor de Klant class. Alle velden zijn verplicht in te vullen via de setter methods.
+ * Zoniet zal createKlant een exception throwen.
+ * @author Yannick.Thibos
+ *
+ */
 public class KlantBuilder {
 	
 	private long id;
@@ -45,6 +51,13 @@ public class KlantBuilder {
 		return this;
 	}
 	
+	/**
+	 * Creëer een nieuwe Klant met de attributen ingevuld door de setters v/d Builder.
+	 * Alle velden moeten eerst gezet worden voordat createFilm succesvol een Klant returnt.
+	 * 
+	 * @return Een Klant object met attributen gezet door de setters van de KlantBuilder.
+	 * @throws KlantException Thrown wanneer minstens één setter werd overgeslagen.
+	 */
 	public Klant createKlant() throws KlantException {
 		if (id != -1 && familienaam != null && voornaam != null && straatnummer != null && postcode != null && gemeente != null) {
 			return new Klant(id, familienaam, voornaam, straatnummer, postcode, gemeente);	

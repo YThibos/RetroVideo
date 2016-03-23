@@ -1,6 +1,7 @@
 package be.vdab.servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import be.vdab.dao.KlantDAO;
+import be.vdab.entities.Klant;
 
 /**
  * Servlet implementation class KlantServlet
@@ -31,7 +33,18 @@ public class KlantServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if (request.getParameter("familienaam") != null) {
-			request.setAttribute("gevondenKlanten", klantDAO.findByFamilienaam(request.getParameter("familienaam")));
+			if (!request.getParameter("familienaam").equals("")) {
+				List<Klant> gevondenKlanten = klantDAO.findByFamilienaam(request.getParameter("familienaam"));
+				if (!gevondenKlanten.isEmpty()) {
+					request.setAttribute("gevondenKlanten", gevondenKlanten);
+				}
+				else {
+					request.setAttribute("fout", "Geen klanten gevonden met zoekstring");
+				}
+			}
+			else {
+				request.setAttribute("fout", "Vul minstens één letter in");
+			}
 		}
 		
 		request.getRequestDispatcher(VIEW).forward(request, response);

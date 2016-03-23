@@ -23,6 +23,13 @@ import be.vdab.entities.Genre;
  */
 public class FilmDAO extends AbstractDAO {
 
+	public static final String COLUMN_ID = "films.id";
+	public static final String COLUMN_GENREID = "films.genreid";
+	public static final String COLUMN_TITEL = "films.titel";
+	public static final String COLUMN_VOORRAAD = "films.voorraad";
+	public static final String COLUMN_GERESERVEERD = "films.gereserveerd";
+	public static final String COLUMN_PRIJS = "films.prijs";
+	
 	public static final String ALL_FILM_FIELDS = "films.id, films.genreid, films.titel, "
 			+ "films.voorraad, films.gereserveerd, films.prijs";
 
@@ -34,8 +41,7 @@ public class FilmDAO extends AbstractDAO {
 			+ " FROM films INNER JOIN genres ON films.genreid=genres.id"
 			+ " WHERE genres.naam=?"
 			+ " ORDER BY films.titel ASC";
-	private static final String SQL_SELECT_TITEL = "SELECT films.id, films.genreid, films.titel, films.voorraad,"
-			+ " films.gereserveerd, films.prijs"
+	private static final String SQL_SELECT_TITEL = "SELECT " + ALL_FILM_FIELDS
 			+ " FROM films"
 			+ " WHERE films.titel=?";
 	private static final String SQL_SELECT_ID = "SELECT " + ALL_FILM_FIELDS
@@ -159,11 +165,12 @@ public class FilmDAO extends AbstractDAO {
 		FilmBuilder newFilm = new FilmBuilder();
 		 try {
 			return newFilm
-			.setId(results.getLong("films.id"))
-			.setTitel(results.getString("films.titel"))
-			.setGereserveerd(results.getInt("films.gereserveerd"))
-			.setVoorraad(results.getInt("films.voorraad"))
-			.setPrijs(new BigDecimal(results.getDouble("films.prijs")))
+			.setId(results.getLong(COLUMN_ID))
+			.setTitel(results.getString(COLUMN_TITEL))
+			.setGereserveerd(results.getInt(COLUMN_GERESERVEERD))
+			.setVoorraad(results.getInt(COLUMN_VOORRAAD))
+			.setPrijs(new BigDecimal(results.getDouble(COLUMN_PRIJS)))
+			.setGenre(new Genre())
 			.createFilm();
 		} catch (FilmException ex) {
 			logger.log(Level.SEVERE, "Error bij mappen/aanmaken van Film uit ResultSet", ex);
@@ -174,7 +181,7 @@ public class FilmDAO extends AbstractDAO {
 
 	private Film mapResultRowToFilmWithGenre(ResultSet results) throws SQLException {
 		
-		Genre genre = new Genre(results.getLong("genres.id"), results.getString("genres.naam"));
+		Genre genre = new Genre(results.getLong(GenreDAO.COLUMN_ID), results.getString(GenreDAO.COLUMN_NAME));
 		
 		Film film = mapResultRowToFilm(results);
 		film.setGenre(genre);

@@ -10,6 +10,8 @@
 </head>
 
 <body>
+	<a href="<c:url value="/index.htm" />">Reservaties</a>
+
 	<h1>Rapport</h1>
 	
 	<c:choose>
@@ -17,7 +19,9 @@
 			<p>Alle reservaties zijn OK</p>
 		</c:when>
 		<c:otherwise>
+			<c:if test="${not empty filmGereserveerd}">
 			<p>Reservatie van</p>
+			</c:if>
 			<ul>
 			<c:forEach var="entry" items="${filmGereserveerd}" >
 				<li>${entry.key.titel}: ${entry.value } </li>

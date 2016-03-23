@@ -10,6 +10,10 @@
 </head>
 
 <body>
+	<a href="<c:url value="/index.htm" />">Reservaties</a>
+	<a href="<c:url value="/mandje.htm" />">Mandje</a>
+	<a href="<c:url value="/klant.htm" />">Klant</a>
+
 	<h1>Bevestigen</h1>
 	
 	<p>${filmCount} film(s) voor ${klant.voornaam} ${klant.familienaam}</p>

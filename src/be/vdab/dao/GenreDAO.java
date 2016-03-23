@@ -16,14 +16,14 @@ public class GenreDAO extends AbstractDAO {
 	/**
 	 * COLUMN NAMES OF THE GENRE TABLE
 	 */
-	private static final String FIELD_ID = "genres.id";
-	private static final String FIELD_NAME = "genres.naam";
+	public static final String COLUMN_ID = "genres.id";
+	public static final String COLUMN_NAME = "genres.naam";
 	public static final String ALL_GENRE_FIELDS = "genres.id, genres.naam";
 
 	/**
 	 * SQL QUERIES
 	 */
-	private static final String SQL_SELECT_GENRES = "SELECT "+FIELD_ID+", "+FIELD_NAME+" FROM genres ORDER BY naam ASC";
+	private static final String SQL_SELECT_GENRES = "SELECT " + ALL_GENRE_FIELDS + " FROM genres ORDER BY naam ASC";
 	
 	private static final Logger logger = Logger.getLogger(GenreDAO.class.getName());
 	
@@ -55,14 +55,14 @@ public class GenreDAO extends AbstractDAO {
 			
 		}
 		catch (SQLException ex ) {
-			logger.log(Level.SEVERE, "Exception while accessing Genres in findAllGenres()", ex);
+			logger.log(Level.SEVERE, "Exception bij het ophalen van data uit table genres", ex);
 			throw new DAOException(ex);
 		}
 		
 	}
 	
 	private Genre mapResultRowToGenre(ResultSet results) throws SQLException {
-		return new Genre(results.getLong(FIELD_ID), results.getString(FIELD_NAME));
+		return new Genre(results.getLong(COLUMN_ID), results.getString(COLUMN_NAME));
 	}
 	
 }

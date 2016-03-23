@@ -21,7 +21,11 @@
 		/> <input type="submit" value="Zoeken" />
 	</form>
 
+	<span>${fout}</span>
+
 	<table>
+		<c:choose>
+		<c:when test="${not empty gevondenKlanten}">
 		<thead>
 			<tr>
 				<th>Naam</th>
@@ -30,6 +34,8 @@
 				<th>Gemeente</th>
 			</tr>
 		</thead>
+		</c:when>
+		</c:choose>
 		<tbody>
 			<c:forEach var="klant" items="${gevondenKlanten}">
 				<tr>

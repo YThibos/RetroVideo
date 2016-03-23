@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ReservatieDAO extends AbstractDAO {
 	
@@ -13,6 +15,8 @@ public class ReservatieDAO extends AbstractDAO {
 	private static final String SQL_UPDATE_FILM_GERESERVEERD = "UPDATE films"
 			+ " SET gereserveerd = gereserveerd + 1"
 			+ " WHERE id = ?";
+	
+	private static final Logger logger = Logger.getLogger(ReservatieDAO.class.getName());
 	
 	/**
 	 * JAVADOC SCHRIJVEN ! RETURN TRUE FALSE WANNEER
@@ -49,6 +53,7 @@ public class ReservatieDAO extends AbstractDAO {
 			
 		}
 		catch (SQLException ex ) {
+			logger.log(Level.SEVERE, "Exception bij het invoegen van data in de tabel reservaties", ex);
 			throw new DAOException(ex);
 		}
 	}

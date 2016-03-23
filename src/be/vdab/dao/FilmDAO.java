@@ -36,10 +36,34 @@ public class FilmDAO extends AbstractDAO {
 	
 	private static final Logger logger = Logger.getLogger(GenreDAO.class.getName());
 	
-	public List<Film> findMultipleIds (List<Long> ids) {
+	public Film findByID (long id) {
 		
 		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ID)) {
+				PreparedStatement sqlStatement = connection.prepareStatement(SQL_SELECT_ID)) {
+			
+			connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+			
+			sqlStatement.setLong(1, id);
+			
+			Film foundFilm = null;
+			
+			try (ResultSet results = sqlStatement.executeQuery()) {
+				if (results.next()) foundFilm = mapResultRowToFilm(results);
+			}
+			
+			return foundFilm;
+			
+		}
+		catch (SQLException ex ) {
+			throw new DAOException(ex);
+		}
+		
+	}
+	
+	public List<Film> findMultipleIDs (List<Long> ids) {
+		
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement sqlStatement = connection.prepareStatement(SQL_SELECT_ID)) {
 
 			List<Film> foundFilms = new ArrayList<>();
 			
@@ -47,8 +71,8 @@ public class FilmDAO extends AbstractDAO {
 			connection.setAutoCommit(false);
 			
 			for (Long id : ids) {
-				statement.setLong(1, id);
-				try (ResultSet results = statement.executeQuery()) {
+				sqlStatement.setLong(1, id);
+				try (ResultSet results = sqlStatement.executeQuery()) {
 					while (results.next()) {
 						foundFilms.add(mapResultRowToFilm(results));
 					}

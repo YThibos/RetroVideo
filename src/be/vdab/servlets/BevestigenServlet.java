@@ -30,12 +30,15 @@ public class BevestigenServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		@SuppressWarnings("unchecked")
 		List<Long> mandjeIDs = (List<Long>) request.getSession().getAttribute("mandjeIDs");
 		
 		if (mandjeIDs != null) {
 			request.setAttribute("filmCount", mandjeIDs.size());
 			
-			request.setAttribute("klant", klantDAO.findByID(Long.parseLong(request.getParameter("klant"))));
+			long klantID = Long.parseLong(request.getParameter("klant"));
+			request.setAttribute("klant", klantDAO.findByID(klantID));
+			request.getSession().setAttribute("klantID", klantID);
 		}
 		
 		request.getRequestDispatcher(VIEW).forward(request, response);

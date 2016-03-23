@@ -38,7 +38,7 @@ public class MandjeServlet extends HttpServlet {
 		@SuppressWarnings("unchecked")
 		List<Long> mandjeIDs = (List<Long>) request.getSession().getAttribute("mandjeIDs");
 		
-		request.setAttribute("filmsInMandje", filmDAO.findMultipleIds(mandjeIDs));
+		request.setAttribute("filmsInMandje", filmDAO.findMultipleIDs(mandjeIDs));
 
 		request.getRequestDispatcher(VIEW).forward(request, response);
 

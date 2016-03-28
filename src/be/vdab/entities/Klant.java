@@ -2,6 +2,12 @@ package be.vdab.entities;
 
 import java.util.Objects;
 
+/**
+ * Class die een Klant en zijn eigenschappen beschrijft, conform de eigenschappen zoals in de RetroVideo database.
+ * 
+ * @author Yannick.Thibos
+ *
+ */
 public class Klant {
 	
 	private long id;
@@ -106,6 +112,9 @@ public class Klant {
 	}
 
 	@Override
+	/**
+	 * Een klant is 'equal' aan een andere klant als hij dezelfde id, voornaam en familienaam heeft.
+	 */
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

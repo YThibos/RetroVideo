@@ -1,11 +1,21 @@
 package be.vdab.entities;
 
+/**
+ * Class die een Genre en zijn eigenschappen beschrijft, conform de eigenschappen zoals in de RetroVideo database.
+ * @author Thibos
+ *
+ */
 public class Genre {
 	
 	private long id;
 	private String naam;
 	
 	// CONSTRUCTORS
+	/**
+	 * Default constructor met waarden:
+	 * <br> id = 0 
+	 * <br> naam = "onbepaald"
+	 */
 	public Genre() {
 		this.id = 0;
 		this.naam = "onbepaald";
@@ -44,6 +54,9 @@ public class Genre {
 		return result;
 	}
 	@Override
+	/**
+	 * Een genre is 'equal' aan een ander genre als het dezelfde naam heeft.
+	 */
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

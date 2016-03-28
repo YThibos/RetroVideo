@@ -28,9 +28,9 @@ public class GenreDAO extends AbstractDAO {
 	private static final Logger logger = Logger.getLogger(GenreDAO.class.getName());
 	
 	/**
-	 * Opens a connection to the database and requests all present Genres in it.
+	 * Connecteert met de database en geeft alle Genres terug die erin zitten, geordend op naam.
 	 * 
-	 * @return	A List with Genres, ordered by ascending names
+	 * @return	Een lijst van alle Genres in de database.
 	 */
 	public List<Genre> findAllGenres() {
 		
@@ -61,8 +61,20 @@ public class GenreDAO extends AbstractDAO {
 		
 	}
 	
-	private Genre mapResultRowToGenre(ResultSet results) throws SQLException {
-		return new Genre(results.getLong(COLUMN_ID), results.getString(COLUMN_NAME));
+	/**
+	 * Haalt alle velden uit een ResultSet rij en returnt een ingevuld Genre object. 
+	 * 
+	 * @param results			Een ResultSet waarvan de cursor al wijst naar een rij.
+	 * @return					Een Genre object ingevuld met de velden van de opgegeven ResultSet,
+	 * 							of null wanneer een SQLException optreedt.
+	 */
+	private Genre mapResultRowToGenre(ResultSet results) {
+		try {
+			return new Genre(results.getLong(COLUMN_ID), results.getString(COLUMN_NAME));
+		} catch (SQLException ex) {
+			logger.log(Level.SEVERE, "Exception bij het ophalen van de velden uit de ResultSet", ex);
+			return null;
+		}
 	}
 	
 }

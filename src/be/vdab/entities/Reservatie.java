@@ -2,6 +2,12 @@ package be.vdab.entities;
 
 import java.time.LocalDate;
 
+/**
+ * Class die een Reservatie en zijn eigenschappen beschrijft, conform de eigenschappen zoals in de RetroVideo database.
+ * 
+ * @author Yannick.Thibos
+ *
+ */
 public class Reservatie {
 	
 	private long klantid;
@@ -58,6 +64,9 @@ public class Reservatie {
 	}
 
 	@Override
+	/**
+	 * Een reservatie is 'equal' aan een andere reservatie als het dezelfde timestamp als reservatieDatum heeft.
+	 */
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

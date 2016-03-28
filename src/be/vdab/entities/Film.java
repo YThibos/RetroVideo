@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * Class die een Film en zijn eigenschappen beschrijft.
+ * Class die een Film en zijn eigenschappen beschrijft, conform de eigenschappen zoals in de RetroVideo database.
  * 
  * @author Yannick.Thibos
  *

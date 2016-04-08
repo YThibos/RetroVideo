@@ -58,15 +58,13 @@ public class RapportServlet extends HttpServlet {
 		Long klantID = (Long) request.getSession().getAttribute("klantID");
 		if (mandjeIDs != null && klantID != null) {
 
-			// List<String> met gelukten is efficiënter om op session te zetten
+			// List<String> met gelukten en mislukten is efficiënter om op session te zetten
 			Map<Film, String> filmGereserveerd = new HashMap<>();
 			for (Long filmID : mandjeIDs) {
 
 				Film requestedFilm = filmDAO.findByID(filmID);
 
-				// TODO DEZE CONTROLE BETER UITVOEREN IN DAO !!!!!!!!
-				if (requestedFilm.getVoorraad() > requestedFilm.getGereserveerd()
-						&& reservatieDAO.insertReservatie(filmID, klantID)) {
+				if (reservatieDAO.insertReservatie(filmID, klantID)) {
 					filmGereserveerd.put(requestedFilm, "gelukt");
 				} else {
 					filmGereserveerd.put(requestedFilm, "mislukt");

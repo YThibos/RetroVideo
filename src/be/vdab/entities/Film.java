@@ -89,6 +89,9 @@ public class Film {
 		}
 		this.gereserveerd = gereserveerd;
 	}
+	public int getBeschikbaar() {
+		return voorraad - gereserveerd;
+	}
 	public BigDecimal getPrijs() {
 		return prijs;
 	}

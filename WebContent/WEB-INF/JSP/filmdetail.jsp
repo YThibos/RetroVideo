@@ -26,8 +26,7 @@
 		<dt>Gereserveerd</dt>
 		<dd>${film.gereserveerd} st.</dd>
 		<dt>Beschikbaar</dt>
-		<c:set var="beschikbaar" value="${film.voorraad - film.gereserveerd}" />
-		<dd>${beschikbaar} st.</dd>
+		<dd>${film.beschikbaar} st.</dd>
 	</dl>
 	<c:if test="${beschikbaar > 0}">
 		<form method="post" action="<c:url value="/mandje.htm" />" id="inmandjeform">

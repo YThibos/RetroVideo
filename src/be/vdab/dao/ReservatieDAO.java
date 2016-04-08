@@ -19,7 +19,7 @@ public class ReservatieDAO extends AbstractDAO {
 			+ " VALUES (?, ? , ?)";
 	private static final String SQL_UPDATE_FILM_GERESERVEERD = "UPDATE films"
 			+ " SET gereserveerd = gereserveerd + 1"
-			+ " WHERE id = ?";
+			+ " WHERE id = ? AND voorraad - gereserveerd > 0";
 	
 	// 
 	
@@ -41,8 +41,6 @@ public class ReservatieDAO extends AbstractDAO {
 			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 			connection.setAutoCommit(false);
 			
-			
-			// TODO HIER EERST CONTROLE OP VOORRAAD >> ..
 			
 			sqlInsertStatement.setLong(1, klantid);
 			sqlInsertStatement.setLong(2, filmid);

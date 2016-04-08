@@ -1,4 +1,4 @@
-<%@ page contentType='text/html' pageEncoding='UTF-8' session='false' %>
+<%@ page contentType='text/html' pageEncoding='UTF-8' session='true' %>
 <%@ taglib prefix="vdab" uri="http://vdab.be/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -12,6 +12,7 @@
 
 <body>
 	<a href="<c:url value="/index.htm" />">Reservaties</a>
+	<vdab:displayMandje/>
 	
 	<c:choose>
 	<c:when test="${not empty film}">

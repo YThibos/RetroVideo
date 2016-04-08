@@ -58,6 +58,7 @@ public class RapportServlet extends HttpServlet {
 		Long klantID = (Long) request.getSession().getAttribute("klantID");
 		if (mandjeIDs != null && klantID != null) {
 
+			// List<String> met gelukten is efficiënter om op session te zetten
 			Map<Film, String> filmGereserveerd = new HashMap<>();
 			for (Long filmID : mandjeIDs) {
 

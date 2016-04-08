@@ -12,4 +12,9 @@
 		<name>head</name>
 		<path>/WEB-INF/tags/vdab/head.tag</path>
 	</tag-file>
+	
+	<tag-file>
+		<name>displayMandje</name>
+		<path>/WEB-INF/tags/vdab/displayMandje.tag</path>
+	</tag-file>
 </taglib>

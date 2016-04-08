@@ -1,4 +1,4 @@
-<%@ page contentType='text/html' pageEncoding='UTF-8' session='false' trimDirectiveWhitespaces="true"%>
+<%@ page contentType='text/html' pageEncoding='UTF-8' session='true' trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="vdab" uri="http://vdab.be/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -10,6 +10,8 @@
 </head>
 
 <body>
+	<vdab:displayMandje/>
+	
 	<h1>Reservaties</h1>
 	<nav>
 	<ul>

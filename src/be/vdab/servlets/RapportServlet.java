@@ -63,6 +63,7 @@ public class RapportServlet extends HttpServlet {
 
 				Film requestedFilm = filmDAO.findByID(filmID);
 
+				// TODO DEZE CONTROLE BETER UITVOEREN IN DAO !!!!!!!!
 				if (requestedFilm.getVoorraad() > requestedFilm.getGereserveerd()
 						&& reservatieDAO.insertReservatie(filmID, klantID)) {
 					filmGereserveerd.put(requestedFilm, "gelukt");

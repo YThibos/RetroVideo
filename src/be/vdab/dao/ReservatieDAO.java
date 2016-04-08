@@ -16,6 +16,8 @@ public class ReservatieDAO extends AbstractDAO {
 			+ " SET gereserveerd = gereserveerd + 1"
 			+ " WHERE id = ?";
 	
+	// 
+	
 	private static final Logger logger = Logger.getLogger(ReservatieDAO.class.getName());
 	
 	/**
@@ -33,6 +35,9 @@ public class ReservatieDAO extends AbstractDAO {
 			
 			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 			connection.setAutoCommit(false);
+			
+			
+			// TODO HIER EERST CONTROLE OP VOORRAAD >> ..
 			
 			sqlInsertStatement.setLong(1, klantid);
 			sqlInsertStatement.setLong(2, filmid);

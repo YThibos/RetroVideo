@@ -36,6 +36,12 @@ public class KlantDAO extends AbstractDAO {
 	
 	public KlantDAO () { }
 	
+	/**
+	 * Connecteert met de RetroVideo database en geeft een Klant terug die overeenkomt met opgegeven id.
+	 * 
+	 * @param id	De id van de te zoeken klant.
+	 * @return		De gevonden Klant met als id die van de parameter, of null indien niet gevonden.
+	 */
 	public Klant findByID (long id) {
 		
 		try (Connection connection = dataSource.getConnection();
@@ -61,6 +67,13 @@ public class KlantDAO extends AbstractDAO {
 		
 	}
 	
+	/**
+	 * Connecteert met de RetroVideo database en geeft een lijst van Klant objecten terug die een deel van de zoekstring
+	 * in hun familienaam hebben.
+	 * 
+	 * @param naam		De zoekstring die in de familienaam moet voorkomen.
+	 * @return			Een lijst van Klant objecten met gedeeltelijke match, of een lege lijst indien niets gevonden.
+	 */
 	public List<Klant> findByFamilienaam (String zoekstring) {
 		
 		try (Connection connection = dataSource.getConnection();
@@ -89,7 +102,14 @@ public class KlantDAO extends AbstractDAO {
 		
 	}
 	
-	public Klant mapResultRowToKlant (ResultSet results) throws SQLException {
+	/**
+	 * Haalt alle velden uit een ResultSet rij en returnt een ingevuld Klant object. 
+	 * 
+	 * @param results			Een ResultSet waarvan de cursor al wijst naar een rij.
+	 * @return					Een Klant object ingevuld met de velden van de opgegeven ResultSet,
+	 * 							of null wanneer een SQLException of een FilmException optreedt.
+	 */
+	public Klant mapResultRowToKlant (ResultSet results) {
 		KlantBuilder klantBuilder = new KlantBuilder();
 		
 		try {
@@ -103,6 +123,9 @@ public class KlantDAO extends AbstractDAO {
 			.createKlant();
 		} catch (KlantException ex) {
 			logger.log(Level.SEVERE, "Error bij mappen/aanmaken van Klant uit ResultSet", ex);
+			return null;
+		} catch (SQLException ex) {
+			logger.log(Level.SEVERE, "Exception bij het ophalen van velden uit ResultSet", ex);
 			return null;
 		}
 	}

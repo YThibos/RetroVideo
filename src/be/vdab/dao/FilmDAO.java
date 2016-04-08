@@ -49,6 +49,12 @@ public class FilmDAO extends AbstractDAO {
 	
 	private static final Logger logger = Logger.getLogger(GenreDAO.class.getName());
 	
+	/**
+	 * Connecteert met de RetroVideo database en geeft een Film terug die overeenkomt met opgegeven id.
+	 * 
+	 * @param id	De id van de te zoeken film.
+	 * @return		De gevonden Film met als id die van de parameter, of null indien niet gevonden.
+	 */
 	public Film findByID (long id) {
 		
 		try (Connection connection = dataSource.getConnection();
@@ -74,6 +80,14 @@ public class FilmDAO extends AbstractDAO {
 		
 	}
 	
+	/**
+	 * Connecteert met de RetroVideo database en geeft een lijst van Film objecten terug met id's die overeenkomen
+	 * in de meegegeven lijst van id's.
+	 * 
+	 * @param ids	De lijst van id's van de te zoeken films.
+	 * @return		Een lijst van gevonden Film objecten met als id's die van de parameter,
+	 * 				of een lege lijst indien niets gevonden.
+	 */
 	public List<Film> findMultipleIDs (List<Long> ids) {
 		
 		try (Connection connection = dataSource.getConnection();
@@ -105,6 +119,12 @@ public class FilmDAO extends AbstractDAO {
 		}
 	}
 	
+	/**
+	 * Connecteert met de RetroVideo database en geeft een Film terug die overeenkomt met opgegeven film titel.
+	 * 
+	 * @param titel		De te zoeken titel in de database.
+	 * @return			De Film met overeenkomstige titel, of null indien niet gevonden.
+	 */
 	public Film findByTitel (String titel) {
 		
 		try (Connection connection = dataSource.getConnection();
@@ -130,6 +150,12 @@ public class FilmDAO extends AbstractDAO {
 		
 	}
 	
+	/**
+	 * Connecteert met de RetroVideo database en geeft een lijst van Film objecten terug van het opgegeven genre.
+	 * 
+	 * @param naam		De naam van het genre waarop gezocht wordt.
+	 * @return			Een lijst van Film objecten met overeenkomstig genre, of een lege lijst indien niets gevonden.
+	 */
 	public List<Film> findByGenre (String naam) {
 		
 		try (Connection connection = dataSource.getConnection();
@@ -160,10 +186,18 @@ public class FilmDAO extends AbstractDAO {
 		
 	}
 	
-	private Film mapResultRowToFilm(ResultSet results) throws SQLException {
+	/**
+	 * Haalt alle velden uit een ResultSet rij en returnt een ingevuld Film object. Genre krijgt de waarden van
+	 * de default constructor van een Genre.
+	 * 
+	 * @param results			Een ResultSet waarvan de cursor al wijst naar een rij.
+	 * @return					Een Film object ingevuld met de velden van de opgegeven ResultSet,
+	 * 							of null wanneer een SQLException of een FilmException optreedt.
+	 */
+	private Film mapResultRowToFilm(ResultSet results) {
 		
 		FilmBuilder newFilm = new FilmBuilder();
-		 try {
+		try {
 			return newFilm
 			.setId(results.getLong(COLUMN_ID))
 			.setTitel(results.getString(COLUMN_TITEL))
@@ -172,21 +206,38 @@ public class FilmDAO extends AbstractDAO {
 			.setPrijs(new BigDecimal(results.getDouble(COLUMN_PRIJS)))
 			.setGenre(new Genre())
 			.createFilm();
+		} catch (SQLException ex) {
+			logger.log(Level.SEVERE, "Exception bij het ophalen van velden uit ResultSet", ex);
+			return null;
 		} catch (FilmException ex) {
-			logger.log(Level.SEVERE, "Error bij mappen/aanmaken van Film uit ResultSet", ex);
+			logger.log(Level.SEVERE, "Exception bij het creëren van Film object met FilmBuilder", ex);
 			return null;
 		}
 		 
 	}
 
-	private Film mapResultRowToFilmWithGenre(ResultSet results) throws SQLException {
+	/**
+	 * Haalt alle velden uit een ResultSet rij en returnt een ingevuld Film object. Genre is ingevuld met overeenkomstige
+	 * Genre waarden uit de database.
+	 * 
+	 * @param results			Een ResultSet waarvan de cursor al wijst naar een rij.
+	 * @return					Een Film object ingevuld met de velden van de opgegeven ResultSet,
+	 * 							of null wanneer een SQLException of een FilmException optreedt.
+	 */
+	private Film mapResultRowToFilmWithGenre(ResultSet results) {
 		
-		Genre genre = new Genre(results.getLong(GenreDAO.COLUMN_ID), results.getString(GenreDAO.COLUMN_NAME));
+		Genre genre;
+		try {
+			genre = new Genre(results.getLong(GenreDAO.COLUMN_ID), results.getString(GenreDAO.COLUMN_NAME));
+			Film film = mapResultRowToFilm(results);
+			film.setGenre(genre);
+			return film;
+		} catch (SQLException ex) {
+			logger.log(Level.SEVERE, "Exception bij het ophalen van velden uit ResultSet", ex);
+			return null;
+		}
 		
-		Film film = mapResultRowToFilm(results);
-		film.setGenre(genre);
 		
-		return film;
 	}
 	
 }

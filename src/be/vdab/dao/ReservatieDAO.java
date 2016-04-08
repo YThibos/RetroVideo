@@ -8,6 +8,11 @@ import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Data Access Object om reservatie data in de retrovideo database weg te schrijven.
+ * @author Yannick.Thibos
+ *
+ */
 public class ReservatieDAO extends AbstractDAO {
 	
 	private static final String SQL_INSERT_RESERVATIE = "INSERT INTO reservaties (klantid, filmid, reservatieDatum)"
@@ -21,11 +26,11 @@ public class ReservatieDAO extends AbstractDAO {
 	private static final Logger logger = Logger.getLogger(ReservatieDAO.class.getName());
 	
 	/**
-	 * JAVADOC SCHRIJVEN ! RETURN TRUE FALSE WANNEER
+	 * Connecteert met de RetroVideo database en voegt een nieuwe reservatie toe in de tabel met reservaties.
 	 * 
-	 * @param filmid
-	 * @param klantid
-	 * @return
+	 * @param filmid	De id van de film die gereserveerd wordt.
+	 * @param klantid	De id van de klant die de film reserveert.
+	 * @return			True wanneer de reservatie gelukt is, false bij falen van toevoegen.
 	 */
 	public boolean insertReservatie (long filmid, long klantid) {
 		
